@@ -13,12 +13,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(CURL REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        src/WMS_Load.cpp
+        src/WMS_Load.h
+        src/ExampleClass.h
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -44,7 +49,8 @@ else()
     endif()
 endif()
 
-target_link_libraries(cute-gis PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(cute-gis PRIVATE Qt${QT_VERSION_MAJOR}::Widgets CURL::libcurl)
+
 
 set_target_properties(cute-gis PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
