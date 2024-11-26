@@ -1,5 +1,7 @@
 #include "mainwindow.h"
-#include "src/WMS_Load.h"
+#include "src/WMS_Geotiff.h"
+#include <iostream>
+#include "src/WMS_Geotiff.h"
 
 #include <QApplication>
 
@@ -12,21 +14,28 @@ int main(int argc, char *argv[])
 
     ///////////////////TEST WMS ///////////////////////////
 
-    std::string wms_url = "https://data.geopf.fr/wms-r?"
-                              "LAYERS=OI.OrthoimageCoverage&EXCEPTIONS=text/xml&"
-                              "FORMAT=image/jpeg&SERVICE=WMS&"
-                              "VERSION=1.3.0&REQUEST=GetMap&STYLES=&CRS=EPSG:4326&"
-                              "BBOX=47.34956960,3.25167353,47.38545104,3.30486151&WIDTH=256&HEIGHT=256";
 
-        std::string output_file = "/home/formation/Documents/mini_SIG/cute-gis/src/output.png";
+    // URL du service WMS
+    const char* wmsUrl = "WMS:https://data.geopf.fr/wms-r?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
 
-        WMSLoader loader(wms_url, output_file);
+    // Nom de la couche WMS que vous souhaitez télécharger
+    const char* layerName = "OI.OrthoimageCoverage";
 
-        if (loader.performRequest()) {
-            std::cout << "Requête WMS réussie, fichier sauvegardé dans : " << output_file << std::endl;
-        } else {
-            std::cerr << "Erreur lors de la requête WMS." << std::endl;
-        }
+    // Crée une instance de la classe wmsdata
+    wmsdata wms(wmsUrl);
 
-    return a.exec();
+    // Ouvre le flux WMS
+
+    //std::cout << "Liste des couches disponibles :" << std::endl;
+    //wms.getLayers();
+
+    // Télécharge une tuile spécifique et la sauvegarde en GeoTIFF
+    const char* outputFile = "/home/formation/Documents/mini_SIG/cute-gis/src/tile_orthoimage.tiff";
+    wms.downloadTileToGeoTiff(layerName, outputFile, 1, 1, 0);
+
+    // Ferme le flux
+    wms.close();
+
+    return 0;
 }
+

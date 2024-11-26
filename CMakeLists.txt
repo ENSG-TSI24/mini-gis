@@ -13,16 +13,21 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(GDAL REQUIRED)
 find_package(CURL REQUIRED)
+
+include_directories(${GDAL_INCLUDE_DIR})
+link_directories(${GDAL_LIBRARY_DIRS})
 
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        src/WMS_Load.cpp
-        src/WMS_Load.h
+        src/WMS_Geotiff.cpp
+        src/WMS_Geotiff.h
         src/ExampleClass.h
+
 
 )
 
@@ -49,7 +54,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(cute-gis PRIVATE Qt${QT_VERSION_MAJOR}::Widgets CURL::libcurl)
+target_link_libraries(cute-gis  PRIVATE Qt${QT_VERSION_MAJOR}::Widgets CURL::libcurl ${GDAL_LIBRARIES})
 
 
 set_target_properties(cute-gis PROPERTIES
