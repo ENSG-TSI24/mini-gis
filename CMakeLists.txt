@@ -14,6 +14,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 find_package(CURL REQUIRED)
+find_package(GDAL REQUIRED)
+
+# Inclure les headers et lier les bibliothèques GDAL
+include_directories(${GDAL_INCLUDE_DIR})
+link_directories(${GDAL_LIBRARY_DIRS})
 
 set(PROJECT_SOURCES
         main.cpp
@@ -22,6 +27,9 @@ set(PROJECT_SOURCES
         mainwindow.ui
         tinyxml2.cpp
         tinyxml2.h
+        src/ExampleClass.h
+        src/wmtsdata.cpp
+        src/wmtsdata.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -47,7 +55,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(cute-gis  PRIVATE Qt${QT_VERSION_MAJOR}::Widgets CURL::libcurl)
+target_link_libraries(cute-gis  PRIVATE Qt${QT_VERSION_MAJOR}::Widgets CURL::libcurl ${GDAL_LIBRARIES})
 
 
 set_target_properties(cute-gis PROPERTIES
