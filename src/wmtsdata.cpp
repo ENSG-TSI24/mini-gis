@@ -38,8 +38,13 @@ void wmtsdata::getLayers() {
     std::cout << "Couches disponibles dans le flux WMTS :" << std::endl;
 
     for (int i = 0; metadata[i] != nullptr; i += 2) {
-        std::cout << metadata[i] << " = " << metadata[i + 1] << std::endl;
-    }
+            std::string subdataset(metadata[i]); // Convertir le char* en std::string
+            size_t pos = subdataset.find("layer="); // Trouver l'emplacement de "layer="
+            if (pos != std::string::npos) {
+                std::string layerName = subdataset.substr(pos + 6); // Extraire la partie après "layer="
+                std::cout << layerName << std::endl;
+            }
+        }
 }
 
 void wmtsdata::downloadTile(const char* layerName, const char* outputFile, int zoom, int row, int col) {
