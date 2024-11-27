@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>610</height>
+    <width>1060</width>
+    <height>737</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,39 +15,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Preferred</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>50</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="1" colspan="4">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Fixed</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>30</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="0" rowspan="3">
+    <item row="0" column="0">
      <widget class="QGroupBox" name="groupBox">
       <property name="enabled">
        <bool>true</bool>
@@ -64,25 +32,95 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="title">
-       <string>Layers manager</string>
+       <string>Layer manager</string>
       </property>
       <property name="flat">
        <bool>false</bool>
       </property>
+      <widget class="QCheckBox" name="checkBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>161</width>
+         <height>40</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Sans Serif</family>
+         <pointsize>12</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Layer 1</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>src/mapLight.png</normaloff>
+         <normalon>src/mapLight.png</normalon>
+         <disabledon>src/mapLight.png</disabledon>
+         <activeon>src/mapLight.png</activeon>
+         <selectedoff>src/mapLight.png</selectedoff>src/mapLight.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>36</width>
+         <height>36</height>
+        </size>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+       <property name="tristate">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>161</width>
+         <height>40</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Sans Serif</family>
+         <pointsize>12</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string>Layer 2</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>src/mapDark.png</normaloff>
+         <normalon>src/mapDark.png</normalon>
+         <disabledon>src/mapLight.png</disabledon>src/mapDark.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>36</width>
+         <height>36</height>
+        </size>
+       </property>
+      </widget>
      </widget>
-    </item>
-    <item row="2" column="1">
-     <spacer name="horizontalSpacer_4">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
     </item>
     <item row="2" column="2">
      <spacer name="horizontalSpacer">
@@ -97,7 +135,39 @@
       </property>
      </spacer>
     </item>
-    <item row="2" column="4">
+    <item row="1" column="0">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Preferred</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>50</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="1" rowspan="2" colspan="3">
+     <widget class="QOpenGLWidget" name="openGLWidget"/>
+    </item>
+    <item row="2" column="1">
+     <spacer name="horizontalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="3">
      <widget class="QPushButton" name="button_3d">
       <property name="text">
        <string>2D/3D</string>
@@ -110,9 +180,6 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="1" colspan="4">
-     <widget class="QOpenGLWidget" name="openGLWidget"/>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -120,24 +187,30 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1060</width>
      <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuhere">
     <property name="title">
-     <string>Files</string>
+     <string>File</string>
     </property>
     <addaction name="actionfiles"/>
    </widget>
    <widget class="QMenu" name="menuedition">
     <property name="title">
-     <string>edition</string>
+     <string>Edit</string>
     </property>
     <addaction name="actionaggregation"/>
    </widget>
+   <widget class="QMenu" name="menuPRojet">
+    <property name="title">
+     <string>Projet</string>
+    </property>
+   </widget>
    <addaction name="menuhere"/>
    <addaction name="menuedition"/>
+   <addaction name="menuPRojet"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionfiles">
