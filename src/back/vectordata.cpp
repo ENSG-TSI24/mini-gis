@@ -149,3 +149,7 @@ std::vector<std::vector<std::vector<std::pair<float, float>>>> VectorData::GetPo
     GDALClose(dataset);
     return polygons;
 }
+
+void VectorData::accept(DataVisitor& visitor) {
+    visitor.visitVectorData(*this);
+}

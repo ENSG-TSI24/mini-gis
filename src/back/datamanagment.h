@@ -1,22 +1,19 @@
 #ifndef DATAMANAGMENT_H
 #define DATAMANAGMENT_H
 
-#include <gdal.h>
 #include <gdal_priv.h>
+#include "dataextract/datavisitor.h"
 
 
 class DataManagment {
 public:
     DataManagment();
     DataManagment(const char* Path);
+    virtual void accept(DataVisitor& visitor) = 0;
     ~DataManagment();
-    // TODO LATER DataManagment(std::string Path, std::string CRS);
     const char* GetPath();
-    // GDALDriver* GetDriver();
-    // GDALDataset* GetDATA();
 protected:
-    // GDALDataset* data;
     const char* filePath;
 };
 
-#endif // DATAMANAGMENT_H
+#endif

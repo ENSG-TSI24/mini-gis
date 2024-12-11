@@ -1,18 +1,19 @@
-#include "../src/back/datamanagment.h"
 #include "../src/back/vectordata.h"
+#include "../src/back/dataextract/sessionvisitor.h"
 
 #include <gtest/gtest.h>
 #include <gdal.h>
 #include <ogrsf_frmts.h>
 
-#include <fstream>
 #include <iostream>
+
+
 
 
 class DataManagmentTest : public ::testing::Test {
     protected:
-        DataManagment data;
         VectorData vectordata;
+        SessionVisitor sessionVisitor;
         const char* inputFile =  "../test_data/BASSIN_VERSANT.geojson";
 };
 
@@ -64,6 +65,12 @@ TEST_F(DataManagmentTest, VectorGetLineStrings) {
     vectordata = VectorData(inputFile);
     auto linestring = vectordata.GetLineStrings();
     EXPECT_TRUE(linestring.size() ==0);
+}
+
+TEST_F(DataManagmentTest, sessionVisitor){
+    vectordata = VectorData(inputFile);
+    SessionVisitor sessionVisitor = SessionVisitor();
+    sessionVisitor.visitVectorData(vectordata);
 }
 
 int main(int argc, char **argv) {

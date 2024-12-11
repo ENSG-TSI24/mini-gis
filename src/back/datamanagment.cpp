@@ -1,5 +1,4 @@
 #include "datamanagment.h"
-#include <iostream>
 #include <gdal.h>
 #include <gdal_priv.h>
 #include <ogrsf_frmts.h>
@@ -23,6 +22,7 @@ DataManagment::~DataManagment() {
 const char* DataManagment::GetPath() {
     return filePath;
 }
+
 /*
 GDALDriver* DataManagment::GetDriver() {
     return data->GetDriver();

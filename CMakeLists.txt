@@ -33,6 +33,8 @@ set(PROJECT_SOURCES
     src/back/datamanagment.h src/back/datamanagment.cpp
     src/back/dataextract/abstractdatavisitor.h
     src/back/dataextract/intersectvisitor.h src/back/dataextract/intersectvisitor.cpp
+    src/back/dataextract/sessionvisitor.h     src/back/dataextract/sessionvisitor.cpp
+    src/back/dataextract/datavisitor.h
     src/back/vectordata.h src/back/vectordata.cpp
     src/back/API_WMS.h src/back/API_WMS.cpp
     src/back/API_WMTS.h src/back/API_WMTS.cpp
@@ -53,6 +55,8 @@ set(TEST_SOURCES_1
     tests/testDataManagment.cpp
     src/back/datamanagment.h src/back/datamanagment.cpp
     src/back/vectordata.h src/back/vectordata.cpp
+    src/back/dataextract/datavisitor.h
+    src/back/dataextract/sessionvisitor.h src/back/dataextract/sessionvisitor.cpp
 )
 
 
