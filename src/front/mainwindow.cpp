@@ -210,24 +210,22 @@ void MainWindow::onOpenFile_stream(const char* chemin)
     }
 }
 
-void MainWindow::on_actionFlux_Data_triggered() {
+void MainWindow::on_actionFlux_Data_triggered()
+{
     addFluxData dialog(this);
-    QString item = "https://data.geopf.fr/wfs/ows?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities";
-    dialog.addItemToComboBox_url(item);
+
+    // Ajouter des URL à la combo box
+    dialog.addItemToComboBox_url("https://data.geopf.fr/wfs/ows?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities");
 
     if (dialog.exec() == QDialog::Accepted) {
-        QString layerURL = dialog.getLayerURL();
         QString layerName = dialog.getLayerName();
+        QString layerURL = dialog.getLayerURL();
 
-        API_WFS wfs(layerURL.toStdString().c_str());
-        try {
-            wfs.loadDataset();
-            wfs.ExportToGeoJSON(layerName.toStdString().c_str());
-            const char* outputPath = wfs.getOutput();
-            onOpenFile_stream(outputPath);
-        } catch (const std::exception& e) {
-            QMessageBox::critical(this, "Error", QString("Failed to process WFS data: %1").arg(e.what()));
-        }
+        // Afficher les informations sélectionnées pour le débogage
+        qDebug() << "Nom de la couche sélectionnée : " << layerName;
+        qDebug() << "URL de la couche sélectionnée : " << layerURL;
+
+        // TODO : Traiter les données sélectionnées (API_WFS, Export, etc.)
     }
 }
 
