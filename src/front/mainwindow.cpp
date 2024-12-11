@@ -226,7 +226,7 @@ void MainWindow::onOpenFile_stream(const char* chemin)
 }
 
 
-
+/**
 void MainWindow::on_actionFlux_Data_triggered() {
     addFluxData dialog(this);  // Create the dialog instance
     if (dialog.exec() == QDialog::Accepted) {  // Wait for user interaction
@@ -269,10 +269,30 @@ void MainWindow::on_actionFlux_Data_triggered() {
             on_actionFlux_Data_triggered();
         }
 
+    }
+}
+**/
+void MainWindow::on_actionFlux_Data_triggered()
+{
+    addFluxData dialog(this);
 
+    // Ajouter des URL à la combo box
+    dialog.addItemToComboBox_url("https://data.geopf.fr/wfs/ows?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities");
+
+    if (dialog.exec() == QDialog::Accepted) {
+        QString layerName = dialog.getLayerName();
+        QString layerURL = dialog.getLayerURL();
+
+        // Afficher les informations sélectionnées pour le débogage
+        qDebug() << "Nom de la couche sélectionnée : " << layerName;
+        qDebug() << "URL de la couche sélectionnée : " << layerURL;
 
     }
 }
+
+
+
+
 
 void MainWindow::parseShapefile(const QString& filePath, Layer2d& layer) {
     GDALAllRegister();
