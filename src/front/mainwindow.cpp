@@ -210,48 +210,28 @@ void MainWindow::onOpenFile_stream(const char* chemin)
     }
 }
 
-
 void MainWindow::on_actionFlux_Data_triggered() {
-    addFluxData dialog(this);  // Create the dialog instance
-    if (dialog.exec() == QDialog::Accepted) {  // Wait for user interaction
-        QString layerName = dialog.getLayerName();  // Get the layer name
-        QString layerURL = dialog.getLayerURL();    // Get the layer URL
+    addFluxData dialog(this);
+    QString item = "https://data.geopf.fr/wfs/ows?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities";
+    dialog.addItemToComboBox_url(item);
 
-        qDebug() << "Layer Name:" << layerName;
-        qDebug() << "URL:" << layerURL;
-        std::string  intername =layerName.toStdString();
-        const char* cclayerName = intername.c_str();
+    if (dialog.exec() == QDialog::Accepted) {
+        QString layerURL = dialog.getLayerURL();
+        QString layerName = dialog.getLayerName();
 
-        // intername.c_str();
-        std::string  intername2 =layerURL.toStdString();
-        const char* wfsUrl = intername2.c_str();
-        std::cout << wfsUrl << std::endl;
-
-        std::cout <<"oui 1" <<std::endl;
-        API_WFS wfs(wfsUrl);
+        API_WFS wfs(layerURL.toStdString().c_str());
         try {
             wfs.loadDataset();
-            if (!wfs.isEmpty()) {
-            char** layers = wfs.displayMetadata(); // Get the list of layers
-
-                    for (int i = 0; layers[i] != nullptr; ++i) { // Iterate until null terminator
-                        std::cout << "Layer " << i + 1 << ": " << layers[i] << std::endl;
-                    }
-            std::cout <<"I'm here"<<std::endl ;
-            wfs.ExportToGeoJSON(intername);
-
-            const char* chemin = wfs.getOutput();
-            onOpenFile_stream(chemin);
-    }
-        }  catch (const std::exception& e) {
-            std::cout << "An error occurred: " << e.what() << std::endl; // **frontend team ( error log )
-            on_actionFlux_Data_triggered();
+            wfs.ExportToGeoJSON(layerName.toStdString().c_str());
+            const char* outputPath = wfs.getOutput();
+            onOpenFile_stream(outputPath);
+        } catch (const std::exception& e) {
+            QMessageBox::critical(this, "Error", QString("Failed to process WFS data: %1").arg(e.what()));
         }
-
-
-
     }
 }
+
+
 
 
 void MainWindow::clearLayout(QLayout *layout) {
