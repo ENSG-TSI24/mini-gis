@@ -1,5 +1,6 @@
 #ifndef CITY_GML_PARSER_H
 #define CITY_GML_PARSER_H
+#define GLM_ENABLE_EXPERIMENTAL
 
 #include <vector>
 #include <string>

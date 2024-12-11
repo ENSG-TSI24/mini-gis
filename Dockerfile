@@ -10,18 +10,20 @@ RUN apt-get update && apt-get install -y \
     libglew-dev \
     libglfw3-dev \
     libglu1-mesa-dev \
+    libglm-dev \
+    nlohmann-json3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 COPY . /app
 
-RUN [ ! -d build ] && mkdir build || true && \
+# compiling using maxing number of processor available
+# and shows detailed output for debugging purposes
+RUN mkdir -p build && \
     cd build && \
-    cmake .. && \
-    make -j$(nproc) && \
-    make clean && \
-    rm -rf /var/lib/apt/lists/*
+    cmake -DCMAKE_VERBOSE_MAKEFILE=ON .. && \
+    make -j$(nproc) VERBOSE=1
 
 
-CMD ["./build/cute-gis"]
+CMD ["/app/build/cute-gis"]

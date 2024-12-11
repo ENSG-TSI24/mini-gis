@@ -1,16 +1,14 @@
-version: '3.9'
+version: '3.8'
 
 services:
   cute-gis:
     build:
       context: .
       dockerfile: Dockerfile
-    image: cute-gis:latest
-    container_name: cute-gis-container
-    stdin_open: true
-    tty: true
+    container_name: cute-gis
     environment:
-      - DISPLAY=${DISPLAY}
+      - DISPLAY=${DISPLAY} # needed for displaying the qt window on the host
     volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-    network_mode: "host"
+      - /tmp/.X11-unix:/tmp/.X11-unix # mandatory for the QT window to show up 
+      - .:/app
+
