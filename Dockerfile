@@ -12,8 +12,10 @@ RUN apt-get update && apt-get install -y \
     libglu1-mesa-dev \
     libglm-dev \
     nlohmann-json3-dev \
+    gdal-bin \ 
     && rm -rf /var/lib/apt/lists/*
 
+#gdal-bin may not be useful    
 WORKDIR /app
 
 COPY . /app
