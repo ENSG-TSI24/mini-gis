@@ -4,6 +4,7 @@
 #include <gdal_priv.h>
 #include "dataextract/datavisitor.h"
 
+#include "dataextract/sessionvisitor.h"
 
 class DataManagment {
 public:
@@ -14,7 +15,7 @@ public:
     const char* GetPath() const;
 protected:
     const char* filePath;
-    DataVisitor* visitor;
+    SessionVisitor* sessionvisitor;
 };
 
 #endif

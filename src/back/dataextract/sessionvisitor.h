@@ -3,11 +3,10 @@
 
 #include <nlohmann/json.hpp>
 #include "datavisitor.h"
-#include "../vectordata.h"
-#include "../rasterdata.h"
 
 class VectorData;
 class RasterData;
+
 
 class SessionVisitor : public DataVisitor {
 public:

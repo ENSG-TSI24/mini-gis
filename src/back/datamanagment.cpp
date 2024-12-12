@@ -4,19 +4,19 @@
 #include <ogrsf_frmts.h>
 
 DataManagment::DataManagment() {
-    // data = nullptr;
     filePath = nullptr;
+    sessionvisitor = nullptr;
 }
 
 DataManagment::DataManagment(const char* Path) {
     GDALAllRegister();
-    // data = (GDALDataset *) GDALOpenEx(Path, GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
-    //  std::cout << "from cosntructor : " << data << std::endl;
     filePath = Path;
+    sessionvisitor = new SessionVisitor();
 }
 
 DataManagment::~DataManagment() {
     // GDALClose(data);
+    delete sessionvisitor;
 }
 
 const char* DataManagment::GetPath() const {

@@ -2,10 +2,12 @@
 #include "datamanagment.h"
 #include <ogrsf_frmts.h>
 
-VectorData::VectorData() : DataManagment() {}
+VectorData::VectorData() : DataManagment() {
+}
 
 VectorData::VectorData(const char* path) : DataManagment(path) {
-    visitor->visitVectorData(*this);
+
+    sessionvisitor->visitVectorData(*this);
 }
 
 

@@ -1,4 +1,5 @@
 #include "rasterdata.h"
+#include "gdal_priv.h"
 #include "src/back/datamanagment.h"
 #include <iostream>
 
@@ -6,7 +7,7 @@ RasterData::RasterData() : DataManagment(nullptr), image(nullptr){
 }
 
 RasterData::RasterData(const char* path) : DataManagment(path) , image(nullptr){
-    visitor->visitRasterData(*this);}
+    sessionvisitor->visitRasterData(*this);}
 
 RasterData::~RasterData()
 {
@@ -182,9 +183,6 @@ QImage* RasterData::GetImage()
     GDALClose(dataset);
     return image;
 }
-
-
-
 
 
 void RasterData::accept(DataVisitor& visitor) {
