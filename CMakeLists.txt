@@ -31,8 +31,7 @@ set(PROJECT_SOURCES
     src/back/citygmlfile.h src/back/citygmlfile.cpp
     src/back/rasterdata.h src/back/rasterdata.cpp
     src/back/datamanagment.h src/back/datamanagment.cpp
-    src/back/dataextract/abstractdatavisitor.h
-    src/back/dataextract/intersectvisitor.h src/back/dataextract/intersectvisitor.cpp
+
     src/back/vectordata.h src/back/vectordata.cpp
     src/back/API_WMS.h src/back/API_WMS.cpp
     src/back/API_WMTS.h src/back/API_WMTS.cpp
@@ -110,10 +109,6 @@ target_link_libraries(API_WMSTest PRIVATE Qt${QT_VERSION_MAJOR}::Widgets GTest::
 target_link_libraries(API_WFSTest PRIVATE Qt${QT_VERSION_MAJOR}::Widgets GTest::GTest GTest::Main CURL::libcurl ${GDAL_LIBRARIES})
 target_link_libraries(API_WMTSTest PRIVATE Qt${QT_VERSION_MAJOR}::Widgets GTest::GTest GTest::Main CURL::libcurl ${GDAL_LIBRARIES})
 target_link_libraries(RasterData PRIVATE Qt${QT_VERSION_MAJOR}::Widgets GTest::GTest GTest::Main CURL::libcurl ${GDAL_LIBRARIES})
-
-
-# Finalize application
-qt_finalize_executable(cute-gis)
 
 # Enable testing
 enable_testing()
