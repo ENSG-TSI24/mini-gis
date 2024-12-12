@@ -9,14 +9,14 @@ public:
     VectorData();
     VectorData(const char* path);
     ~VectorData();
-    std::vector<std::vector<std::vector<std::pair<float, float>>>> GetPolygons();
+    std::vector<std::vector<std::vector<std::tuple<float, float, float>>>>GetPolygons();
     std::vector<std::vector<std::pair<float, float>>> GetLineStrings();
     std::vector<std::pair<float, float>> GetPoints();
     
     void accept(DataVisitor& visitor) override;
 
+    std::vector<std::vector<std::vector<std::pair<float, float>>>> Get2DPolygons();
 protected:
-    const char* filePath;
 };
 
 #endif // VECTORDATA_H

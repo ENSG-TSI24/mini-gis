@@ -2,5 +2,9 @@ graph/uml.drawio
 CMakeLists.txt.user*
 build/
 .vscode
+<<<<<<< HEAD
 .cache
 
+=======
+.cache
+>>>>>>> devback
