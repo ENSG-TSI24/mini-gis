@@ -3,9 +3,9 @@
 
 #include "datamanagment.h"
 #include <QImage>
+#include "dataextract/datavisitor.h"
 
-class RasterData : public DataManagment
-{
+class RasterData : public DataManagment{
 public:
     RasterData();
     RasterData(const char* path);
@@ -14,12 +14,11 @@ public:
     std::pair<double, double> GetGeoCoordinates(int pixelX, int pixelY);
     std::vector<std::pair<double, double>> GetGeoCoordinatesForPixels(const std::vector<std::pair<int, int>>& pixelCoordinates);
     QImage *GetImage();
-
+    void accept(DataVisitor& visitor) override;
     int GetWidth() const;
     int GetHeight() const;
 
 protected:
-    const char* filePath;
     int width;
     int height;
     QImage* image;

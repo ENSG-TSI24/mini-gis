@@ -4,7 +4,9 @@
 
 VectorData::VectorData() : DataManagment() {}
 
-VectorData::VectorData(const char* path) : DataManagment(path) {}
+VectorData::VectorData(const char* path) : DataManagment(path) {
+    visitor->visitVectorData(*this);
+}
 
 
 VectorData::~VectorData() {}

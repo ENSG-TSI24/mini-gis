@@ -1,13 +1,12 @@
 #include "rasterdata.h"
+#include "src/back/datamanagment.h"
 #include <iostream>
 
-RasterData::RasterData() : filePath(nullptr), image(nullptr)
-{
+RasterData::RasterData() : DataManagment(nullptr), image(nullptr){
 }
 
-RasterData::RasterData(const char* path) : filePath(path), image(nullptr)
-{
-}
+RasterData::RasterData(const char* path) : DataManagment(path) , image(nullptr){
+    visitor->visitRasterData(*this);}
 
 RasterData::~RasterData()
 {
@@ -188,3 +187,6 @@ QImage* RasterData::GetImage()
 
 
 
+void RasterData::accept(DataVisitor& visitor) {
+    visitor.visitRasterData(*this);
+}

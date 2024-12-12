@@ -115,7 +115,7 @@ qt_add_executable(cute-gis
 )
 
 # Link libraries
-target_link_libraries(cute-gis PRIVATE Qt6::Widgets Qt6::OpenGLWidgets Qt6::Network glfw GLEW libGLEW.so libGLU.so libGL.so CURL::libcurl ${GDAL_LIBRARIES})
+target_link_libraries(cute-gis PRIVATE Qt6::Widgets Qt6::OpenGLWidgets Qt6::Network Qt6::Gui glfw GLEW libGLEW.so libGLU.so libGL.so CURL::libcurl ${GDAL_LIBRARIES})
 target_link_libraries(testDataManagment PRIVATE GTest::GTest GTest::Main ${GDAL_LIBRARIES})
 target_link_libraries(API_WMSTest PRIVATE Qt${QT_VERSION_MAJOR}::Widgets GTest::GTest GTest::Main CURL::libcurl ${GDAL_LIBRARIES})
 target_link_libraries(API_WFSTest PRIVATE Qt${QT_VERSION_MAJOR}::Widgets GTest::GTest GTest::Main CURL::libcurl ${GDAL_LIBRARIES})

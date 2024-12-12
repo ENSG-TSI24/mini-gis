@@ -14,6 +14,7 @@ public:
     const char* GetPath() const;
 protected:
     const char* filePath;
+    DataVisitor* visitor;
 };
 
 #endif
