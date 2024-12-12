@@ -19,7 +19,7 @@ DataManagment::~DataManagment() {
     // GDALClose(data);
 }
 
-const char* DataManagment::GetPath() {
+const char* DataManagment::GetPath() const {
     return filePath;
 }
 

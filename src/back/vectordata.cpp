@@ -1,6 +1,5 @@
 #include "vectordata.h"
-#include "src/back/datamanagment.h"
-#include <cstddef>
+#include "datamanagment.h"
 #include <ogrsf_frmts.h>
 
 VectorData::VectorData() : DataManagment() {}

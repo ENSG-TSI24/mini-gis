@@ -9,5 +9,5 @@ SessionVisitor::~SessionVisitor() {
 }
     
 void SessionVisitor::visitVectorData(const VectorData& vectordata) {
-    std::cout << "Visited VectorData" << std::endl;
+    std::cout << "Visited VectorData" << vectordata.GetPath() << std::endl;
 }

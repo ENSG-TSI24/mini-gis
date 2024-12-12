@@ -11,7 +11,7 @@ public:
     DataManagment(const char* Path);
     virtual void accept(DataVisitor& visitor) = 0;
     ~DataManagment();
-    const char* GetPath();
+    const char* GetPath() const;
 protected:
     const char* filePath;
 };
