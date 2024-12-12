@@ -6,6 +6,7 @@
 
 #include "dataextract/sessionvisitor.h"
 
+
 class DataManagment {
 public:
     DataManagment();

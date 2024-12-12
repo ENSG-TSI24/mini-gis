@@ -16,7 +16,6 @@ DataManagment::DataManagment(const char* Path) {
 
 DataManagment::~DataManagment() {
     // GDALClose(data);
-    delete sessionvisitor;
 }
 
 const char* DataManagment::GetPath() const {
