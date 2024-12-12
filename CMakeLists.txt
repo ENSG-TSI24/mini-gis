@@ -21,7 +21,7 @@ find_package(GTest REQUIRED)
 find_package(GDAL REQUIRED)
 find_package(CURL REQUIRED)
 
-include_directories(${GDAL_INCLUDE_DIR})
+include_directories(${GDAL_INCLUDE_DIR} ${Qt6Core_INCLUDE_DIRS} ${Qt6Gui_INCLUDE_DIRS})
 link_directories(${GDAL_LIBRARY_DIRS})
 
 set(PROJECT_SOURCES

@@ -1,9 +1,9 @@
 #include "rasterdata.h"
 #include "gdal_priv.h"
-#include "src/back/datamanagment.h"
+#include "datamanagment.h"
 #include <iostream>
 
-RasterData::RasterData() : DataManagment(nullptr), image(nullptr){
+RasterData::RasterData() : DataManagment(), image(nullptr){
 }
 
 RasterData::RasterData(const char* path) : DataManagment(path) , image(nullptr){

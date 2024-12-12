@@ -1,8 +1,10 @@
 #ifndef RASTERDATA_H
 #define RASTERDATA_H
 
-#include "datamanagment.h"
 #include <QImage>
+#include "datamanagment.h"
+#include "dataextract/datavisitor.h"
+
 
 class RasterData : public DataManagment{
 public:
