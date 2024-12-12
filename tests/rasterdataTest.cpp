@@ -7,7 +7,7 @@
 class RasterDataTest : public ::testing::Test {
 protected:
     RasterData raster;
-    const char* testFile = "../output_WMS/London.tif";
+    const char* testFile = "../output_WMS/tile_orthoimage.tif";
 
     void SetUp() override {
         raster = RasterData(testFile);
