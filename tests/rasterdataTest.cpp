@@ -7,7 +7,7 @@
 class RasterDataTest : public ::testing::Test {
 protected:
     RasterData raster;
-    const char* testFile = "/home/formation/Documents/mini_SIG/cute-gis/output_WMS/London.tif";
+    const char* testFile = "../output_WMS/London.tif";
 
     void SetUp() override {
         raster = RasterData(testFile);
