@@ -277,7 +277,7 @@ void MainWindow::on_actionFlux_Data_triggered()
     addFluxData dialog(this);
 
     // Ajouter des URL à la combo box
-    dialog.addItemToComboBox_url("https://data.geopf.fr/wfs/ows?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities");
+    dialog.addItemToComboBox_url("WFS:https://data.geopf.fr/wfs/ows?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities");
 
     if (dialog.exec() == QDialog::Accepted) {
         QString layerName = dialog.getLayerName();

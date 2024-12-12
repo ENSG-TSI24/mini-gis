@@ -58,9 +58,9 @@ void addFluxData::loadLayersFromURL(const QString& url)
     ui->layer->clear();  // Effacer les couches précédentes
 
     try {
-        std::cout << url.toStdString().c_str() <<std::endl;
-        std::cout << "oui" <<std::endl;
-        API_WFS wfs(url.toStdString().c_str());
+        std::string  intername2 =url.toStdString();
+        const char* wfsUrl = intername2.c_str();
+        API_WFS wfs(wfsUrl);
 
         wfs.loadDataset();
 
