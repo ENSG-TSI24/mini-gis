@@ -24,7 +24,8 @@
 
 #include <ogrsf_frmts.h>
 
-
+#include "../back/API_WMS.h"
+#include "../back/API_WMTS.h"
 #include "../back/API_WFS.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -278,31 +279,56 @@ void MainWindow::on_actionFlux_Data_triggered()
 
     // Ajouter des URL à la combo box
     dialog.addItemToComboBox_url("WFS:https://data.geopf.fr/wfs/ows?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities");
-
+    dialog.addItemToComboBox_url("WMTS:https://data.geopf.fr/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetCapabilities");
+    dialog.addItemToComboBox_url("WMS:https://data.geopf.fr/wms-r?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities");
     if (dialog.exec() == QDialog::Accepted) {
         QString layerName = dialog.getLayerName();
         QString layerURL = dialog.getLayerURL();
 
         std::string intername2 = layerName.toStdString();
-
-
         std::string  intername1 = layerURL.toStdString();
         const char* Url = intername1.c_str();
 
-        API_WFS wfs(Url);
-        wfs.loadDataset();
-        wfs.ExportToGeoJSON(intername2);
-        std::cout << "url" << Url << std::endl;
-        std::cout << "layer" << intername2 << std::endl;
-        std::cout << wfs.displayMetadata() << std::endl;
-        const char* chemin = wfs.getOutput();
-        onOpenFile_stream(chemin);
+        DataProvider d;
+        std::string typef = d.GetTypeStream(Url);
+
+
+        if (typef == "WFS"){
+            API_WFS wfs(Url);
+            wfs.loadDataset();
+            wfs.ExportToGeoJSON(intername2);
+            std::cout << "url" << Url << std::endl;
+            std::cout << "layer" << intername2 << std::endl;
+            std::cout << wfs.displayMetadata() << std::endl;
+            const char* chemin = wfs.getOutput();
+            onOpenFile_stream(chemin);
+        }
+
+        else if (typef == "WMS"){
+            API_WMS wms(Url);
+            wms.loadDataset();
+
+            std::cout << "url" << Url << std::endl;
+            std::cout << "layer" << intername2 << std::endl;
+            std::cout << wms.displayMetadata() << std::endl;
+            //const char* chemin = wms.getOutput();
+            //onOpenFile_stream(chemin);
+        } else {
+            API_WMTS wmts(Url);
+            wmts.loadDataset();
+
+            std::cout << "url" << Url << std::endl;
+            std::cout << "layer" << intername2 << std::endl;
+            std::cout << wmts.displayMetadata() << std::endl;
+        }
+        }
+
 
 
 
        }
 
-    }
+
 
 
 

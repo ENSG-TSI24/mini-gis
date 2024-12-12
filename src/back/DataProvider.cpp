@@ -23,53 +23,72 @@ char** DataProvider::displayMetadata() {
 
     // Metadata keys for WMS and WMTS
     const char* keys[] = {"SUBDATASETS", "LAYERS", nullptr};
-    bool metadataFound = false;
+    std::vector<std::string> layerNames;  // List to store layer names
 
+    // Process metadata for WMS/WMTS
     for (int k = 0; keys[k] != nullptr; ++k) {
         m_metadata = m_dataset->GetMetadata(keys[k]);
         if (m_metadata != nullptr) {
-            metadataFound = true;
             std::cout << "Metadata group: " << keys[k] << std::endl;
+
+            // Parse metadata to extract layer names
             for (int i = 0; m_metadata[i] != nullptr; ++i) {
-                std::cout << "  " << m_metadata[i] << std::endl;
+                std::string metadataLine = m_metadata[i];
+
+                // Look for "layer=" in the line
+                size_t pos = metadataLine.find("layer=");
+                if (pos != std::string::npos) {
+                    // Extract the layer name after "layer="
+                    std::string layerName = metadataLine.substr(pos + 6);  // Skip "layer="
+                    layerNames.push_back(layerName);  // Add to the list
+                    std::cout << "  Layer name: " << layerName << std::endl;
+                }
             }
         }
     }
 
-    // If no WMS/WMTS metadata is found, check for WFS layers
-    if (!metadataFound) {
+    // If no WMS/WMTS metadata was found, check for WFS layers
+    if (layerNames.empty()) {
         std::cout << "No WMS/WMTS metadata found. Checking for WFS layers..." << std::endl;
 
         int layerCount = m_dataset->GetLayerCount();
         if (layerCount == 0) {
             std::cout << "No layers found in the dataset." << std::endl;
-            return nullptr;
+            return ;
         }
 
-        // Allocate memory for the array of layer names
-        char** liste_layers = new char*[layerCount + 1]; // +1 for the null terminator
+        // Traverse WFS layers
         for (int i = 0; i < layerCount; ++i) {
             OGRLayer* layer = m_dataset->GetLayer(i);
             if (layer != nullptr) {
                 const char* layerName = layer->GetName();
-                liste_layers[i] = new char[strlen(layerName) + 1];
-                strcpy(liste_layers[i], layerName);
-
+                layerNames.push_back(layerName);  // Add to the list
+                std::cout << "  Layer name: " << layerName << std::endl;
             } else {
                 std::cout << "  Layer " << i + 1 << ": [Error accessing layer]" << std::endl;
-                liste_layers[i] = nullptr;
             }
         }
-
-        // Add null terminator to the array
-        liste_layers[layerCount] = nullptr;
-
-        return liste_layers;
     }
 
-    return nullptr;
-}
+    // Check if any layers were found, otherwise return nullptr
+    if (layerNames.empty()) {
+        return nullptr;
+    }
 
+    // Allocate memory for the char** array of layer names
+    char** liste_layers = new char*[layerNames.size() + 1];  // +1 for null terminator
+
+    // Copy layer names into the liste_layers array
+    for (size_t i = 0; i < layerNames.size(); ++i) {
+        liste_layers[i] = new char[layerNames[i].size() + 1];
+        strcpy(liste_layers[i], layerNames[i].c_str());
+    }
+
+    // Add a null terminator to the end of the array
+    liste_layers[layerNames.size()] = nullptr;
+
+    return liste_layers;
+}
 bool DataProvider::isEmpty(){
     return m_dataset==nullptr;
 }

@@ -19,7 +19,7 @@ void API_WMS::loadDataset() {
         when the front end team finishes ( to reinsert or close window) */
     if (isEmpty()) {
         std::cerr << "Error: Impossible to connect to WMS or unsupported format" << std::endl;
-        throw std::runtime_error("Failed to load dataset"); // Lancer une exception au lieu d'exit
+        exit(1); // ** to be replaced later
     }
 }
 

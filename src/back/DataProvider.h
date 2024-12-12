@@ -1,4 +1,4 @@
-
+#pragma once
 #include <gdal_priv.h>
 #include <ogrsf_frmts.h>
 #include <iostream>

@@ -3,6 +3,8 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "../back/API_WFS.h"
+#include "../back/API_WMS.h"
+#include "../back/API_WMTS.h"
 
 addFluxData::addFluxData(QWidget *parent) :
     QDialog(parent),
@@ -59,21 +61,65 @@ void addFluxData::loadLayersFromURL(const QString& url)
 
     try {
         std::string  intername2 =url.toStdString();
-        const char* wfsUrl = intername2.c_str();
-        API_WFS wfs(wfsUrl);
+        const char* Url = intername2.c_str();
+        DataProvider d;
+        std::string typef = d.GetTypeStream(Url);
 
-        wfs.loadDataset();
+        if (typef == "WFS"){
+            API_WFS wfs(Url);
 
-        if (!wfs.isEmpty()) {
-            char** layers = wfs.displayMetadata();  // Récupérer les couches depuis l'URL WFS
-            for (int i = 0; layers[i] != nullptr; ++i) {
-                ui->layer->addItem(QString::fromStdString(layers[i]));  // Ajouter chaque couche à la combo box
+            wfs.loadDataset();
+
+            if (!wfs.isEmpty()) {
+                char** layers = wfs.displayMetadata();  // Récupérer les couches depuis l'URL WFS
+                for (int i = 0; layers[i] != nullptr; ++i) {
+                    ui->layer->addItem(QString::fromStdString(layers[i]));  // Ajouter chaque couche à la combo box
+                }
+
+
+            } else {
+                ui->layer->addItem("Aucune couche disponible.");
+                QMessageBox::information(this, "Info", "Aucune couche trouvée pour cette URL.");
             }
+        }
+        else if (typef == "WMS"){
+            API_WMS wms(Url);
+
+            wms.loadDataset();
+
+            if (!wms.isEmpty()) {
+                std::cout << "pas rien" << std::endl;
+                char** layers = wms.displayMetadata();
+                // Récupérer les couches depuis l'URL WFS
+                for (int i = 0; layers[i] != nullptr; ++i) {
+                    std::cout << layers[i] << std::endl;
+
+                    ui->layer->addItem(QString::fromStdString(layers[i]));  // Ajouter chaque couche à la combo box
+                }
 
 
-        } else {
-            ui->layer->addItem("Aucune couche disponible.");
-            QMessageBox::information(this, "Info", "Aucune couche trouvée pour cette URL.");
+            } else {
+                ui->layer->addItem("Aucune couche disponible.");
+                QMessageBox::information(this, "Info", "Aucune couche trouvée pour cette URL.");
+            }
+        }
+        else if (typef == "WMTS"){
+            API_WMTS wmts(Url);
+
+            wmts.loadDataset();
+
+            if (!wmts.isEmpty()) {
+                char** layers = wmts.displayMetadata();  // Récupérer les couches depuis l'URL WFS
+                for (int i = 0; layers[i] != nullptr; ++i) {
+                    std::cout << layers[i] << std::endl;
+                    ui->layer->addItem(QString::fromStdString(layers[i]));  // Ajouter chaque couche à la combo box
+                }
+
+
+            } else {
+                ui->layer->addItem("Aucune couche disponible.");
+                QMessageBox::information(this, "Info", "Aucune couche trouvée pour cette URL.");
+            }
         }
     } catch (const std::exception& e) {
         ui->layer->addItem("Aucune couche disponible.");
