@@ -23,7 +23,7 @@ char** DataProvider::displayMetadata() {
 
     // Metadata keys for WMS and WMTS
     const char* keys[] = {"SUBDATASETS", "LAYERS", nullptr};
-    std::vector<std::string> layerNames;  // List to store layer names
+    std::vector<std::string> layerNames; // List to store layer names
 
     // Process metadata for WMS/WMTS
     for (int k = 0; keys[k] != nullptr; ++k) {
@@ -31,17 +31,25 @@ char** DataProvider::displayMetadata() {
         if (m_metadata != nullptr) {
             std::cout << "Metadata group: " << keys[k] << std::endl;
 
-            // Parse metadata to extract layer names
             for (int i = 0; m_metadata[i] != nullptr; ++i) {
                 std::string metadataLine = m_metadata[i];
+                std::cout << "  Metadata line: " << metadataLine << std::endl;
 
-                // Look for "layer=" in the line
-                size_t pos = metadataLine.find("layer=");
-                if (pos != std::string::npos) {
-                    // Extract the layer name after "layer="
-                    std::string layerName = metadataLine.substr(pos + 6);  // Skip "layer="
-                    layerNames.push_back(layerName);  // Add to the list
-                    std::cout << "  Layer name: " << layerName << std::endl;
+                // Check for SUBDATASET_*_NAME for WMS
+                if (metadataLine.find("SUBDATASET_") == 0 && metadataLine.find("_NAME=") != std::string::npos) {
+                    size_t pos = metadataLine.find("LAYERS=");
+                    if (pos != std::string::npos) {
+                        // Extract the layer name after "LAYERS="
+                        std::string layerName = metadataLine.substr(pos + 7); // Skip "LAYERS="
+                        layerNames.push_back(layerName);
+                        std::cout << "    Extracted layer name: " << layerName << std::endl;
+                    }
+                } else if (metadataLine.find("layer=") != std::string::npos) {
+                    // Handle standard WMTS metadata with "layer="
+                    size_t pos = metadataLine.find("layer=");
+                    std::string layerName = metadataLine.substr(pos + 6); // Skip "layer="
+                    layerNames.push_back(layerName);
+                    std::cout << "    Extracted layer name: " << layerName << std::endl;
                 }
             }
         }
@@ -54,7 +62,7 @@ char** DataProvider::displayMetadata() {
         int layerCount = m_dataset->GetLayerCount();
         if (layerCount == 0) {
             std::cout << "No layers found in the dataset." << std::endl;
-            return ;
+            return nullptr;
         }
 
         // Traverse WFS layers
@@ -62,7 +70,7 @@ char** DataProvider::displayMetadata() {
             OGRLayer* layer = m_dataset->GetLayer(i);
             if (layer != nullptr) {
                 const char* layerName = layer->GetName();
-                layerNames.push_back(layerName);  // Add to the list
+                layerNames.push_back(layerName); // Add to the list
                 std::cout << "  Layer name: " << layerName << std::endl;
             } else {
                 std::cout << "  Layer " << i + 1 << ": [Error accessing layer]" << std::endl;
@@ -76,7 +84,7 @@ char** DataProvider::displayMetadata() {
     }
 
     // Allocate memory for the char** array of layer names
-    char** liste_layers = new char*[layerNames.size() + 1];  // +1 for null terminator
+    char** liste_layers = new char*[layerNames.size() + 1]; // +1 for null terminator
 
     // Copy layer names into the liste_layers array
     for (size_t i = 0; i < layerNames.size(); ++i) {
@@ -89,6 +97,7 @@ char** DataProvider::displayMetadata() {
 
     return liste_layers;
 }
+
 bool DataProvider::isEmpty(){
     return m_dataset==nullptr;
 }
