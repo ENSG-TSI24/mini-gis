@@ -283,12 +283,27 @@ void MainWindow::on_actionFlux_Data_triggered()
         QString layerName = dialog.getLayerName();
         QString layerURL = dialog.getLayerURL();
 
-        // Afficher les informations sélectionnées pour le débogage
-        qDebug() << "Nom de la couche sélectionnée : " << layerName;
-        qDebug() << "URL de la couche sélectionnée : " << layerURL;
+        std::string intername2 = layerName.toStdString();
+
+
+        std::string  intername1 = layerURL.toStdString();
+        const char* Url = intername1.c_str();
+
+        API_WFS wfs(Url);
+        wfs.loadDataset();
+        wfs.ExportToGeoJSON(intername2);
+        std::cout << "url" << Url << std::endl;
+        std::cout << "layer" << intername2 << std::endl;
+        std::cout << wfs.displayMetadata() << std::endl;
+        const char* chemin = wfs.getOutput();
+        onOpenFile_stream(chemin);
+
+
+
+       }
 
     }
-}
+
 
 
 

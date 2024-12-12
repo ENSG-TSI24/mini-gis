@@ -69,6 +69,8 @@ void addFluxData::loadLayersFromURL(const QString& url)
             for (int i = 0; layers[i] != nullptr; ++i) {
                 ui->layer->addItem(QString::fromStdString(layers[i]));  // Ajouter chaque couche à la combo box
             }
+
+
         } else {
             ui->layer->addItem("Aucune couche disponible.");
             QMessageBox::information(this, "Info", "Aucune couche trouvée pour cette URL.");
